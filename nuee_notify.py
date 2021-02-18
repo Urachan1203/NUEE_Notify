@@ -15,10 +15,11 @@ from selenium.webdriver.common.keys import Keys
 from html.parser import HTMLParser
 from datetime import date,datetime
 from enum import IntEnum
+import config
 
 URL = 'https://auth.nagoya-u.ac.jp/cas/login?service=https%3A%2F%2Fwww.nuee.nagoya-u.ac.jp%2Finternal'
-LAST_UPDATED_DATE_PATH = '/path/to/last_updated_log.txt'
-LOG_PATH = '/path/to/log.txt'
+LAST_UPDATED_DATE_PATH = '/home/urachan/Desktop/nuee_notify/log/last_updated_log.txt'
+LOG_PATH = '/home/urachan/Desktop/nuee_notify/log/log.txt'
 
 #kkkk
 #タグ除去
@@ -52,14 +53,17 @@ class Info(IntEnum):
 #cas認証突破
 def login(url):
     #url = "https://auth.nagoya-u.ac.jp/cas/login?service=https%3A%2F%2Fwww.nuee.nagoya-u.ac.jp%2Finternal"
-    login = NU_ID #名大ID
-    password = NU_PASSWORD #パスワード
+
+    login = config.LOGIN
+    password = config.PASS
 
     options = Options()
     options.add_argument('--headless')
+    options.add_argument('--no-sandbox')
+    options.add_argument('--disable-dev-shm-usage')
 
-    driver = webdriver.Chrome(executable_path="/usr/lib/chromium-browser/chromedriver", chrome_options=options)
-
+    # driver = webdriver.Chrome(executable_path="/home/urachan/.local/lob/python3.7/site-package/chromedriver")
+    driver = webdriver.Chrome(executable_path="/usr/lib/chromium-browser/chromedriver",chrome_options=options)
     driver.implicitly_wait(10)
     
     driver.get(url)
@@ -116,12 +120,11 @@ def get_info(url_list):
 
 
 def tweet_info(url,target,category,subject):
-    
-    #Twitter API key を入力
-    auth=twitter.OAuth(consumer_key=CONSUMER_KEY,
-    consumer_secret=CONSUMER_SECRET,
-    token=TOKEN,
-    token_secret=TOKEN_SECRET)
+
+    auth=twitter.OAuth(consumer_key = config.CONSUMER_KEY,
+    consumer_secret = config.CONSUMER_SECRET,
+    token = config.TOKEN,
+    token_secret = config.TOKEN_SECRET )
 
     t=twitter.Twitter(auth=auth)
 
