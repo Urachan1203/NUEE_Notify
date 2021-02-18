@@ -52,8 +52,8 @@ class Info(IntEnum):
 #cas認証突破
 def login(url):
     #url = "https://auth.nagoya-u.ac.jp/cas/login?service=https%3A%2F%2Fwww.nuee.nagoya-u.ac.jp%2Finternal"
-    login = NU_ID #名大ID
-    password = NU_PASSWORD #パスワード
+    login = "NU_ID" #名大ID
+    password = "NU_PASSWORD" #パスワード
 
     options = Options()
     options.add_argument('--headless')
@@ -118,10 +118,10 @@ def get_info(url_list):
 def tweet_info(url,target,category,subject):
     
     #Twitter API key を入力
-    auth=twitter.OAuth(consumer_key=CONSUMER_KEY,
-    consumer_secret=CONSUMER_SECRET,
-    token=TOKEN,
-    token_secret=TOKEN_SECRET)
+    auth=twitter.OAuth(consumer_key="CONSUMER_KEY",
+    consumer_secret="CONSUMER_SECRET",
+    token="TOKEN",
+    token_secret="TOKEN_SECRET")
 
     t=twitter.Twitter(auth=auth)
 
